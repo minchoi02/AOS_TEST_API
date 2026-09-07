@@ -43,9 +43,6 @@ AOS_PROVIDER_TOKEN=실제-토큰
 ## 3. 실행
 
 ### PostgreSQL
-```bash
-docker compose up -d
-```
 
 ### Spring Boot
 ```bash
