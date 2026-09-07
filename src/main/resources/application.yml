@@ -1,0 +1,88 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: aos-api-swagger
+
+  datasource:
+    # url: ${DB_URL:jdbc:postgresql://localhost:5432/aos}
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/aos?sslmode=disable}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# ============================================================
+# Swagger
+# ============================================================
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    display-request-duration: true
+    persist-authorization: true
+  api-docs:
+    path: /v3/api-docs
+
+# ============================================================
+# AOS Provider API
+# ============================================================
+aos:
+  provider:
+    # 실제 보험개발원 제공 API 주소/경로는 제안서에 명시되어 있지 않으므로 환경변수로 주입합니다.
+    base-url: ${AOS_PROVIDER_BASE_URL:http://localhost:9090}
+    token: ${AOS_PROVIDER_TOKEN:}
+
+# management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: health,info
+
+# ============================================================
+# KakaoTalk Channel
+# ============================================================
+kakao:
+  channel:
+    # 카카오 채널 ID
+    channel-id: ${KAKAO_CHANNEL_ID:}
+
+    # 카카오 채널에서 전달되는 요청 검증용 Secret
+    webhook-secret: ${KAKAO_WEBHOOK_SECRET:}
+
+  skill:
+    # 카카오 i 오픈빌더 Skill URL
+    # 외부에서 접근 가능한 HTTPS 주소를 운영환경에서 사용
+    callback-url: ${KAKAO_SKILL_CALLBACK_URL:http://localhost:8080/api/v1/kakao/skill}
+
+    # Skill 요청 허용 여부
+    enabled: ${KAKAO_SKILL_ENABLED:true}
+
+  api:
+    # 카카오 API 서버 주소
+    base-url: ${KAKAO_API_BASE_URL:https://kapi.kakao.com}
+
+    # 카카오 API 관련 인증정보
+    rest-api-key: ${KAKAO_REST_API_KEY:}
+
+    admin-key: ${KAKAO_ADMIN_KEY:}
+
+# ============================================================
+# Management
+# ============================================================
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
